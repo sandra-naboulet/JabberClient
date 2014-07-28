@@ -1,0 +1,39 @@
+# built application files
+*.apk
+*.ap_
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file
+local.properties
+
+# Misc files
+.DS_Store
+
+# eclipse
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+.classpath
+.settings/
+.loadpath
+
+# eclipse launch configurations
+*.launch
+
+# PDT-specific
+.buildpath
+
+# Package Files #
+*.jar
+*.war
+*.ear

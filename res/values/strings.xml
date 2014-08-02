@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">JabberClient</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-
+   	<string name="username">Username</string>
+	<string name="password">Password</string>
+	<string name="login">Login</string>
+   	<string name="signup_link">Sign up to JabberClient</string>
 </resources>

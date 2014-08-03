@@ -1,5 +1,6 @@
-package etna.pmob.jabberclient;
+package etna.pmob.jabberclient.activities;
 
+import etna.pmob.jabberclient.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;

@@ -2,8 +2,13 @@
 <resources>
 
     <string name="app_name">JabberClient</string>
-   	<string name="username">Username</string>
-	<string name="password">Password</string>
-	<string name="login">Login</string>
-   	<string name="signup_link">Sign up to JabberClient</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="signup_link">Sign up to JabberClient</string>
+    <string name="login_succeed">Your are logged</string>
+    <string name="login_failed">Login failed. Retry</string>
+    <string name="logout_failed">Cannot disconnect</string>
+    <string name="logout_succeed">You have been disconnected</string>
+
 </resources>

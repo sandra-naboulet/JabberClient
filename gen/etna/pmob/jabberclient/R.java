@@ -20,6 +20,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class color {
         public static final int black_overlay=0x7f040001;
+        public static final int header_bg=0x7f040003;
         public static final int primary=0x7f040002;
         public static final int white=0x7f040000;
     }
@@ -28,31 +29,49 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int contactsListView=0x7f070006;
-        public static final int icon=0x7f070000;
-        public static final int login_button=0x7f070004;
-        public static final int login_password=0x7f070003;
-        public static final int login_username=0x7f070002;
-        public static final int secondLine=0x7f070001;
-        public static final int tabs_container=0x7f070005;
+        public static final int contact_emailId=0x7f070002;
+        public static final int contact_name=0x7f070001;
+        public static final int contact_thumbnail=0x7f070000;
+        public static final int contactsListView=0x7f070010;
+        public static final int login_button=0x7f070007;
+        public static final int login_header=0x7f070003;
+        public static final int login_password=0x7f070006;
+        public static final int login_title=0x7f070004;
+        public static final int login_username=0x7f070005;
+        public static final int signup_button=0x7f07000f;
+        public static final int signup_confirm_password=0x7f07000e;
+        public static final int signup_header=0x7f07000a;
+        public static final int signup_link=0x7f070008;
+        public static final int signup_password=0x7f07000d;
+        public static final int signup_title=0x7f07000b;
+        public static final int signup_username=0x7f07000c;
+        public static final int tabs_container=0x7f070009;
     }
     public static final class layout {
         public static final int activity_contact_item=0x7f030000;
         public static final int activity_login=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int fragment_contacts_tab=0x7f030003;
-        public static final int fragment_history_tab=0x7f030004;
-        public static final int fragment_profile_tab=0x7f030005;
+        public static final int activity_signup=0x7f030003;
+        public static final int fragment_contacts_tab=0x7f030004;
+        public static final int fragment_history_tab=0x7f030005;
+        public static final int fragment_profile_tab=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int login=0x7f050003;
-        public static final int login_failed=0x7f050006;
-        public static final int login_succeed=0x7f050005;
-        public static final int logout_failed=0x7f050007;
-        public static final int logout_succeed=0x7f050008;
+        public static final int confirm_password=0x7f050003;
+        public static final int login=0x7f050004;
+        public static final int login_failed=0x7f050007;
+        public static final int login_succeed=0x7f050006;
+        public static final int logout_failed=0x7f050008;
+        public static final int logout_succeed=0x7f050009;
         public static final int password=0x7f050002;
-        public static final int signup_link=0x7f050004;
+        public static final int signup=0x7f05000a;
+        public static final int signup_failed=0x7f05000e;
+        public static final int signup_link=0x7f050005;
+        public static final int signup_password_empty=0x7f05000c;
+        public static final int signup_passwords_dont_match=0x7f05000d;
+        public static final int signup_succeed=0x7f05000f;
+        public static final int signup_username_empty=0x7f05000b;
         public static final int username=0x7f050001;
     }
     public static final class style {

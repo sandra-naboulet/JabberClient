@@ -25,29 +25,25 @@ class LoginTask extends AsyncTask<String, String, Result> {
 
 	@Override
 	protected Result doInBackground(String... params) {
-		boolean isConnected = connection.isConnected();
-		boolean isAuthenticated = connection.isAuthenticated();
-		boolean now = false;
+
 		try {
 
 			connection.connect();
-			now = connection.isConnected();
 			connection.login(params[0], params[1]);
-
-			return new Result(Result.Status.SUCCESS, handler.getActivity()
-					.getApplicationContext().getResources()
-					.getString(R.string.login_succeed)
-					+ isConnected + " puis " + now);
 
 		} catch (XMPPException e) {
 			return new Result(Result.Status.ERROR, handler.getActivity()
 					.getApplicationContext().getResources()
-					.getString(R.string.login_failed)
-					+ isConnected + " puis " + now);
+					.getString(R.string.login_failed));
 		} catch (Exception e) {
-			return new Result(Result.Status.ERROR, "your account: "
-					+ isConnected + " puis " + now);
+			return new Result(Result.Status.ERROR, handler.getActivity()
+					.getApplicationContext().getResources()
+					.getString(R.string.login_failed));
 		}
+
+		return new Result(Result.Status.SUCCESS, handler.getActivity()
+				.getApplicationContext().getResources()
+				.getString(R.string.login_succeed));
 
 	}
 

@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".LoginActivity" >
+    tools:context=".SignupActivity" >
 
     <RelativeLayout
-        android:id="@+id/login_header"
+        android:id="@+id/signup_header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_margin="10dp"
@@ -30,20 +30,20 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/login_title"
+            android:id="@+id/signup_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:gravity="left"
-            android:text="@string/login"
+            android:text="@string/signup"
             android:textColor="@color/primary"
             android:textSize="9pt" />
 
         <EditText
-            android:id="@+id/login_username"
+            android:id="@+id/signup_username"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/login_title"
+            android:layout_below="@+id/signup_title"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@android:color/white"
@@ -53,10 +53,10 @@
             android:singleLine="true" />
 
         <EditText
-            android:id="@+id/login_password"
+            android:id="@+id/signup_password"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/login_username"
+            android:layout_below="@+id/signup_username"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="30dp"
@@ -66,29 +66,32 @@
             android:padding="10dp"
             android:singleLine="true" />
 
-        <Button
-            android:id="@+id/login_button"
+        <EditText
+            android:id="@+id/signup_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@+id/login_password"
+            android:layout_below="@+id/signup_password"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/white"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/signup_confirm_password"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="40dp"
             android:background="@color/primary"
-            android:text="@string/login"
+            android:text="@string/signup"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/signup_link"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:gravity="center_horizontal"
-        android:text="@string/signup_link"
-        android:textColor="@color/primary"
-        android:textSize="15sp" />
 
 </RelativeLayout>

@@ -1,11 +1,7 @@
 package etna.pmob.jabberclient.network;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
-import org.jivesoftware.smack.Roster;
-import org.jivesoftware.smack.SASLAuthentication;
-import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
-import org.jivesoftware.smack.sasl.SASLDigestMD5Mechanism;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -15,11 +11,14 @@ import android.os.AsyncTask;
 import android.util.Log;
 import etna.pmob.jabberclient.BuildConfig;
 import etna.pmob.jabberclient.ui.ActivityHandler;
+import etna.pmob.jabberclient.ui.ContactsHandler;
 import etna.pmob.jabberclient.ui.LoginHandler;
+import etna.pmob.jabberclient.ui.SignupHandler;
 
 public class ConnectionManager {
 
-	public static final String HOST = "jabberd.org";
+	// public static final String HOST = "talk.l.google.com";
+	public static final String HOST = "talk.google.com";
 	public static final int PORT = 5222;
 	public static final String SERVICE = "gmail.com";
 
@@ -48,19 +47,24 @@ public class ConnectionManager {
 	}
 
 	public void login(String username, String password) {
-		new LoginTask(connection, (LoginHandler) handler).execute(username,
-				password);
+		new LoginTask(connection, (LoginHandler) handler).execute(username
+				+ "@gmail.com", password);
 	}
 
 	public void register(String username, String password) {
-		new RegisterTask(connection, handler).execute(username, password);
+		new RegisterTask(connection, (SignupHandler) handler).execute(username,
+				password);
+	}
+
+	public void displayContactsList() {
+		new ContactsListTask(connection, (ContactsHandler) handler).execute();
 	}
 
 	public void disconnect() {
 		new DisconnectTask(connection, handler).execute();
 	}
-	
-	public boolean isConnected(){
+
+	public boolean isConnected() {
 		return connection.isConnected();
 	}
 
@@ -104,25 +108,29 @@ public class ConnectionManager {
 						Log.i("Jabber", "Connected to internet");
 					}
 
-					SASLAuthentication.registerSASLMechanism("DIGEST-MD5",
-							SASLDigestMD5Mechanism.class);
-					SASLAuthentication.supportSASLMechanism("DIGEST-MD5", 1);
+					// SASLAuthentication.registerSASLMechanism("DIGEST-MD5",
+					// SASLDigestMD5Mechanism.class);
+					// SASLAuthentication.supportSASLMechanism("DIGEST-MD5", 1);
+					//
+					// System.setProperty("smack.debugEnabled", "true");
+					// XMPPConnection.DEBUG_ENABLED = true;
+					// SmackConfiguration.setPacketReplyTimeout(6000);
+					//
+					// config = new ConnectionConfiguration(HOST, PORT,
+					// SERVICE);
+					// config.setSASLAuthenticationEnabled(true);
+					// config.setRosterLoadedAtLogin(false);
+					// config.setCompressionEnabled(true);
+					// config.setSecurityMode(ConnectionConfiguration.SecurityMode.enabled);
+					//
+					// connection = new XMPPConnection(config);
+					//
+					// SASLAuthentication.supportSASLMechanism("PLAIN");
+					// config.setSASLAuthenticationEnabled(true);
+					// connection.connect();
+					// Roster.setDefaultSubscriptionMode(Roster.SubscriptionMode.manual);
 
-					System.setProperty("smack.debugEnabled", "true");
-					XMPPConnection.DEBUG_ENABLED = true;
-					SmackConfiguration.setPacketReplyTimeout(6000);
-
-					config = new ConnectionConfiguration(HOST, PORT);
-					config.setSASLAuthenticationEnabled(true);
-					config.setRosterLoadedAtLogin(false);
-					config.setCompressionEnabled(true);
-
-					connection = new XMPPConnection(config);
-
-					SASLAuthentication.supportSASLMechanism("PLAIN");
-					config.setSASLAuthenticationEnabled(true);
-					connection.connect();
-					Roster.setDefaultSubscriptionMode(Roster.SubscriptionMode.manual);
+					connection = new XMPPConnection(SERVICE);
 
 					return Boolean.TRUE;
 

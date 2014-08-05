@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.network.ConnectionManager;
@@ -19,6 +20,7 @@ public class LoginActivity extends Activity implements LoginHandler {
 	Button loginButton = null;
 	EditText usernameEditText = null;
 	EditText passwordEditText = null;
+	TextView signupTextView = null;
 
 	ConnectionManager connectionManager;
 	private boolean isLogging = false;
@@ -56,6 +58,22 @@ public class LoginActivity extends Activity implements LoginHandler {
 			}
 		});
 
+		signupTextView = (TextView) layout.findViewById(R.id.signup_link);
+		signupTextView.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction();
+
+				if (action == MotionEvent.ACTION_UP) {
+					Intent intent = new Intent(LoginActivity.this,
+							SignupActivity.class);
+					startActivity(intent);
+				}
+				return true;
+			}
+		});
+
 		connectionManager = ConnectionManager.getInstance();
 		connectionManager.setUiHandler(this);
 		connectionManager.start(); // connection to the server
@@ -82,8 +100,8 @@ public class LoginActivity extends Activity implements LoginHandler {
 			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent);
 		} else {
-			usernameEditText.setText("");
-			passwordEditText.setText("");
+			// user nameEditText.setText("");
+			// passwordEditText.setText("");
 			// connectionManager.restart();
 		}
 		isLogging = false;
@@ -99,11 +117,6 @@ public class LoginActivity extends Activity implements LoginHandler {
 
 		Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
 		toast.show();
-	}
-
-	@Override
-	public void onDestroy() {
-		connectionManager.disconnect();
 	}
 
 	@Override

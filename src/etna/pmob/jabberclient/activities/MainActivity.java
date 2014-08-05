@@ -10,7 +10,6 @@ import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.activities.tabs.ContactsTab;
 import etna.pmob.jabberclient.activities.tabs.HistoryTab;
 import etna.pmob.jabberclient.activities.tabs.ProfileTab;
-import etna.pmob.jabberclient.network.ConnectionManager;
 import etna.pmob.jabberclient.ui.MainHandler;
 import etna.pmob.jabberclient.util.TabListener;
 
@@ -22,8 +21,6 @@ public class MainActivity extends Activity implements MainHandler {
 	Fragment profileTabFragment = new ProfileTab();
 
 	FrameLayout layout = null;
-
-	ConnectionManager connectionManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +60,6 @@ public class MainActivity extends Activity implements MainHandler {
 		actionBar.addTab(ContactsTab);
 		actionBar.addTab(ProfileTab);
 
-		connectionManager = ConnectionManager.getInstance();
-		connectionManager.setUiHandler(this);
-		connectionManager.start(); // connection to the server
-
 	}
 
 	@Override
@@ -83,11 +76,6 @@ public class MainActivity extends Activity implements MainHandler {
 	public void displayToast(String message) {
 		Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
 		toast.show();
-	}
-
-	@Override
-	public void onDestroy() {
-		connectionManager.disconnect();
 	}
 
 }

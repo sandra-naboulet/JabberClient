@@ -4,11 +4,18 @@
     <string name="app_name">JabberClient</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="login">Login</string>
     <string name="signup_link">Sign up to JabberClient</string>
     <string name="login_succeed">Your are logged</string>
-    <string name="login_failed">Login failed. Retry</string>
+    <string name="login_failed">Error : login failed</string>
     <string name="logout_failed">Cannot disconnect</string>
     <string name="logout_succeed">You have been disconnected</string>
+    <string name="signup">Signup</string>
+    <string name="signup_username_empty">Enter a username</string>
+    <string name="signup_password_empty">Enter a password</string>
+    <string name="signup_passwords_dont_match">Passwords don\'t match</string>
+    <string name="signup_failed">Error : signup failed</string>
+    <string name="signup_succeed">You are registered</string>
 
 </resources>

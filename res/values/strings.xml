@@ -17,5 +17,8 @@
     <string name="signup_passwords_dont_match">Passwords don\'t match</string>
     <string name="signup_failed">Error : signup failed</string>
     <string name="signup_succeed">You are registered</string>
+    <string name="contact_thumbnail">thumbnail</string>
+    <string name="contact_menu_chat">Send a message</string>
+    <string name="contact_menu_profile">See profile</string>
 
 </resources>

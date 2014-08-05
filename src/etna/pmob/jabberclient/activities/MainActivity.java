@@ -4,12 +4,17 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.activities.tabs.ContactsTab;
 import etna.pmob.jabberclient.activities.tabs.HistoryTab;
 import etna.pmob.jabberclient.activities.tabs.ProfileTab;
+import etna.pmob.jabberclient.network.Contact;
 import etna.pmob.jabberclient.ui.MainHandler;
 import etna.pmob.jabberclient.util.TabListener;
 
@@ -21,6 +26,8 @@ public class MainActivity extends Activity implements MainHandler {
 	Fragment profileTabFragment = new ProfileTab();
 
 	FrameLayout layout = null;
+
+	Contact selectedContact;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,8 @@ public class MainActivity extends Activity implements MainHandler {
 		actionBar.addTab(ContactsTab);
 		actionBar.addTab(ProfileTab);
 
+		registerForContextMenu(layout);
+
 	}
 
 	@Override
@@ -76,6 +85,34 @@ public class MainActivity extends Activity implements MainHandler {
 	public void displayToast(String message) {
 		Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
 		toast.show();
+	}
+
+	public void openContactMenu(Contact contact) {
+		selectedContact = contact;
+		openContextMenu(layout);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.setHeaderTitle(selectedContact.getName());
+		menu.add(0, v.getId(), 0, getString(R.string.contact_menu_chat));
+		menu.add(0, v.getId(), 0, getString(R.string.contact_menu_profile));
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if (item.getTitle() == getString(R.string.contact_menu_chat)) {
+			// Intent intent = new Intent(MainActivity.this,
+			// PsControllerActivity.class);
+			// startActivity(intent);
+		} else if (item.getTitle() == getString(R.string.contact_menu_profile)) {
+
+		} else {
+			return false;
+		}
+		return true;
 	}
 
 }

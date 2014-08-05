@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import etna.pmob.jabberclient.R;
+import etna.pmob.jabberclient.activities.MainActivity;
 import etna.pmob.jabberclient.network.ConnectionManager;
 import etna.pmob.jabberclient.network.Contact;
 import etna.pmob.jabberclient.ui.ContactsHandler;
@@ -24,6 +25,9 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 
 	List<Contact> contactsList = null;
 	ListView listview = null;
+
+	final String EMAIL_KEY = "email";
+	final String NAME_KEY = "name";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,33 +46,8 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 		ConnectionManager.getInstance().displayContactsList();
 
 		return rootView;
-	}
 
-	// private class StableArrayAdapter extends ArrayAdapter<Contact> {
-	//
-	// HashMap<Contact, Integer> mIdMap = new HashMap<Contact, Integer>();
-	//
-	// public StableArrayAdapter(Context context, int textViewResourceId,
-	// List<Contact> objects) {
-	//
-	// super(context, textViewResourceId, objects);
-	// for (int i = 0; i < objects.size(); ++i) {
-	// mIdMap.put(objects.get(i), i);
-	// }
-	// }
-	//
-	// @Override
-	// public long getItemId(int position) {
-	// Contact item = getItem(position);
-	// return mIdMap.get(item);
-	// }
-	//
-	// @Override
-	// public boolean hasStableIds() {
-	// return true;
-	// }
-	//
-	// }
+	}
 
 	public class ArrayAdapter extends BaseAdapter {
 
@@ -90,8 +69,9 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 			return data.size();
 		}
 
-		public Object getItem(int position) {
-			return position;
+		public Contact getItem(int position) {
+			return new Contact(data.get(position).get(EMAIL_KEY), data.get(
+					position).get(NAME_KEY));
 		}
 
 		public long getItemId(int position) {
@@ -103,7 +83,8 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 			if (convertView == null)
 				vi = inflater.inflate(R.layout.activity_contact_item, null);
 
-			TextView email = (TextView) vi.findViewById(R.id.contact_emailId); // email
+			// TextView email = (TextView)
+			// vi.findViewById(R.id.contact_emailId); // email
 			TextView name = (TextView) vi.findViewById(R.id.contact_name); // name
 
 			// ImageView thumb_image = (ImageView) vi
@@ -113,11 +94,19 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 			contact = data.get(position);
 
 			// Setting all values in listview
-			email.setText(contact.get("email"));
-			name.setText(contact.get("name"));
+			// email.setText(contact.get(EMAIL_KEY));
+
+			if (contact.get(NAME_KEY) == null
+					|| contact.get(NAME_KEY).isEmpty()) {
+				name.setText(contact.get(EMAIL_KEY));
+			} else {
+				name.setText(contact.get(NAME_KEY));
+			}
+
 			// imageLoader.DisplayImage(contact.get("thumbnail"), thumb_image);
 			return vi;
 		}
+
 	}
 
 	@Override
@@ -140,10 +129,10 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 
 		// looping through all song nodes &lt;song&gt;
 		for (Contact contact : contactsList) {
-			
+
 			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("email", contact.getEmailId());
-			map.put("name", contact.getFirstname() + " " + contact.getLastname());
+			map.put(EMAIL_KEY, contact.getEmailId());
+			map.put(NAME_KEY, contact.getName());
 			map.put("thumbnail", "...");
 
 			// adding HashList to ArrayList
@@ -170,6 +159,16 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 				// view.setAlpha(1);
 				// }
 				// });
+				Contact selectedContact = (Contact) parent
+						.getItemAtPosition(position);
+
+				Activity actionBarActivity = getActivity();
+
+				if (actionBarActivity instanceof MainActivity) {
+					((MainActivity) actionBarActivity)
+							.openContactMenu(selectedContact);
+				}
+
 			}
 
 		});

@@ -29,7 +29,8 @@ class LoginTask extends AsyncTask<String, String, Result> {
 		try {
 
 			connection.connect();
-			connection.login(params[0], params[1]);
+			//connection.login(params[0], params[1]);
+			connection.login("s.naboulet@gmail.com", "imediosl1");
 
 		} catch (XMPPException e) {
 			return new Result(Result.Status.ERROR, handler.getActivity()

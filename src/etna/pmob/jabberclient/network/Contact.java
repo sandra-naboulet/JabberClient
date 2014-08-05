@@ -3,14 +3,12 @@ package etna.pmob.jabberclient.network;
 public class Contact {
 
 	String emailId;
-	String firstname;
-	String lastname;
+	String name;
 
-	public Contact(String emailId, String firstname, String lastname) {
+	public Contact(String emailId, String name) {
 		super();
 		this.emailId = emailId;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.name = name;
 	}
 
 	public String getEmailId() {
@@ -21,26 +19,17 @@ public class Contact {
 		this.emailId = emailId;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
 	public String toString() {
-		return "Contact [emailId=" + emailId + ", firstname=" + firstname
-				+ ", lastname=" + lastname + "]";
+		return "Contact [emailId=" + emailId + ", firstname=" + name + "]";
 	}
 
 }

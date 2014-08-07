@@ -9,7 +9,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.activities.tabs.ContactsTab;
@@ -27,7 +27,7 @@ public class MainActivity extends Activity implements MainHandler {
 	Fragment contactsTabFragment = new ContactsTab();
 	Fragment profileTabFragment = new ProfileTab();
 
-	FrameLayout layout = null;
+	RelativeLayout layout = null;
 
 	Contact selectedContact;
 
@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements MainHandler {
 
 		super.onCreate(savedInstanceState);
 
-		layout = (FrameLayout) FrameLayout.inflate(this,
+		layout = (RelativeLayout) RelativeLayout.inflate(this,
 				R.layout.activity_main, null);
 
 		setContentView(layout);
@@ -73,6 +73,8 @@ public class MainActivity extends Activity implements MainHandler {
 
 		connectionManager = ConnectionManager.getInstance();
 		connectionManager.start(); // connection to the server
+
+		
 
 	}
 

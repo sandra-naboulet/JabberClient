@@ -55,6 +55,7 @@ class ContactsTask extends AsyncTask<String, String, List<Contact>> {
 			for (RosterEntry entry : roster.getEntries()) {
 
 				presencek = roster.getPresence(entry.getUser());
+				
 				contacts.add(new Contact(entry.getUser().toString(), entry
 						.getName()));
 

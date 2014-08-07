@@ -57,7 +57,7 @@ public class MainActivity extends Activity implements MainHandler {
 
 		HistoryTab = actionBar.newTab().setText("History");
 		ContactsTab = actionBar.newTab().setText("Contacts");
-		ProfileTab = actionBar.newTab().setText("Profile");
+		ProfileTab = actionBar.newTab().setText("My Profile");
 
 		// Set Tab Listeners
 		HistoryTab.setTabListener(new TabListener(historyTabFragment));
@@ -121,6 +121,17 @@ public class MainActivity extends Activity implements MainHandler {
 			intent.putExtra("contactEmailId", selectedContact.getEmailId());
 			startActivity(intent);
 		} else if (item.getTitle() == getString(R.string.contact_menu_profile)) {
+			Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+			String name;
+			if (selectedContact.getName() == null
+					|| selectedContact.getName().isEmpty()) {
+				name = selectedContact.getEmailId();
+			} else {
+				name = selectedContact.getName();
+			}
+			intent.putExtra("contactName", name);
+			intent.putExtra("contactEmailId", selectedContact.getEmailId());
+			startActivity(intent);
 
 		} else {
 			return false;

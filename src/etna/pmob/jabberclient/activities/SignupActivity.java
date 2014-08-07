@@ -66,7 +66,7 @@ public class SignupActivity extends Activity implements SignupHandler {
 									R.string.signup_passwords_dont_match));
 							return true;
 						}
-						connectionManager.register(usernameEditText.getText()
+						connectionManager.register(SignupActivity.this, usernameEditText.getText()
 								.toString(), passwordEditText.getText()
 								.toString());
 						isRegistering = true;

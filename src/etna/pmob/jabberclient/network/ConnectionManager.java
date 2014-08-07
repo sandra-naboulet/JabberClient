@@ -1,5 +1,6 @@
 package etna.pmob.jabberclient.network;
 
+import org.jivesoftware.smack.AccountManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
@@ -10,6 +11,7 @@ import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.ui.ChatHandler;
 import etna.pmob.jabberclient.ui.ContactsHandler;
 import etna.pmob.jabberclient.ui.LoginHandler;
+import etna.pmob.jabberclient.ui.SignupHandler;
 import etna.pmob.jabberclient.util.Session;
 
 public class ConnectionManager {
@@ -77,23 +79,27 @@ public class ConnectionManager {
 				session.setEmailId(username + "@gmail.com");
 			}
 			session.setPassword(password);
+			// session.setName(connection.getAccountManager().get);
 
-			handler.displayToast(handler.getActivity().getResources().getString(R.string.login_succeed));
+			AccountManager m = new AccountManager(connection);
+
+			handler.displayToast(handler.getActivity().getResources()
+					.getString(R.string.login_succeed));
 			handler.isLogged(true);
 
 		} catch (XMPPException e) {
-			handler.displayToast(handler.getActivity().getResources().getString(R.string.login_failed));
+			handler.displayToast(handler.getActivity().getResources()
+					.getString(R.string.login_failed));
 			handler.isLogged(false);
 		}
-		
+
 		connection.disconnect();
 
 	}
 
-	public void register(String username, String password) {
-		// new RegisterTask(connection, (SignupHandler)
-		// handler).execute(username,
-		// password);
+	public void register(SignupHandler handler, String username, String password) {
+		new RegisterTask(connection, (SignupHandler) handler).execute(username,
+				password);
 	}
 
 	public void send(final ChatHandler handler, String to, String message) {
@@ -152,6 +158,10 @@ public class ConnectionManager {
 		protected void onPostExecute(Boolean result) {
 			super.onPostExecute(result);
 		}
+	}
+
+	public void onActivityStop() {
+		connection.disconnect();
 	}
 
 }

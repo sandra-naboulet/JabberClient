@@ -4,6 +4,8 @@ public class Session {
 	String emailId;
 	String password;
 
+	String name;
+
 	private static class Holder {
 		private final static Session INSTANCE = new Session();
 	}
@@ -26,6 +28,14 @@ public class Session {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

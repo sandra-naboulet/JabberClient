@@ -144,5 +144,11 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 		});
 
 	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		ConnectionManager.getInstance().onActivityStop();
+	}
 
 }

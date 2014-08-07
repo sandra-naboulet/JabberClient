@@ -1,6 +1,7 @@
 package etna.pmob.jabberclient.activities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import android.app.Activity;
@@ -24,6 +25,7 @@ import etna.pmob.jabberclient.datas.Contact;
 import etna.pmob.jabberclient.datas.Message;
 import etna.pmob.jabberclient.network.ConnectionManager;
 import etna.pmob.jabberclient.ui.ChatHandler;
+import etna.pmob.jabberclient.util.Session;
 
 public class ChatActivity extends Activity implements ChatHandler {
 
@@ -79,11 +81,11 @@ public class ChatActivity extends Activity implements ChatHandler {
 
 				if (action == MotionEvent.ACTION_UP) {
 					if (!isSending && contact != null) {
-
+						isSending = false;
 						connectionManager.send(ChatActivity.this, contact
 								.getEmailId(), messageEditText.getText()
 								.toString());
-						isSending = false;
+
 					}
 				}
 				return true;
@@ -97,21 +99,11 @@ public class ChatActivity extends Activity implements ChatHandler {
 		messagesListView = (ListView) layout
 				.findViewById(R.id.messages_list_view);
 
-		// connection
 		connectionManager = ConnectionManager.getInstance();
-		// connectionManager.start(); // connection to the server
-
 		connectionManager.startMessagesListener(this);
 
 		// init messages list
 		msgItemList = new ArrayList<HashMap<String, String>>();
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put(MESSAGE_KEY, "lalald lkdl ufo uofdiu odfugiodu ogidf");
-		HashMap<String, String> map2 = new HashMap<String, String>();
-		map2.put(MESSAGE_KEY,
-				"SAlut  sdif n je suis fatigueee vivement ce weekend !");
-		msgItemList.add(map);
-		msgItemList.add(map2);
 
 		adapter = new ArrayAdapter(this.getActivity(), msgItemList);
 
@@ -155,7 +147,7 @@ public class ChatActivity extends Activity implements ChatHandler {
 
 		public Message getItem(int position) {
 			return new Message(data.get(position).get(FROM_KEY), data.get(
-					position).get(MESSAGE_KEY));
+					position).get(MESSAGE_KEY), new Date().toString());
 		}
 
 		public long getItemId(int position) {
@@ -169,26 +161,39 @@ public class ChatActivity extends Activity implements ChatHandler {
 
 			TextView content = (TextView) vi
 					.findViewById(R.id.chat_message_content);
+			RelativeLayout container = (RelativeLayout) vi
+					.findViewById(R.id.chat_message_container);
 
 			HashMap<String, String> message = new HashMap<String, String>();
 			message = data.get(position);
 
 			content.setText(message.get(MESSAGE_KEY));
 
+			if (message.get(FROM_KEY)
+					.equals(Session.getInstance().getEmailId())) {
+				container.setBackgroundColor(getResources().getColor(
+						R.color.primary));
+				content.setTextColor(getResources().getColor(R.color.header_bg));
+			} else {
+
+				container.setBackgroundColor(getResources().getColor(
+						R.color.header_bg));
+				content.setTextColor(getResources().getColor(R.color.white));
+			}
+
 			return vi;
 		}
-
 	}
 
 	@Override
 	public void messageIsSent(boolean is) {
 		isSending = false;
 		HashMap<String, String> map = new HashMap<String, String>();
-		map.put(MESSAGE_KEY, messageEditText.getText().toString());
+		map.put(MESSAGE_KEY, "me : " + messageEditText.getText().toString());
+		map.put(FROM_KEY, Session.getInstance().getEmailId());
 		msgItemList.add(map);
 		adapter.notifyDataSetChanged();
 		messagesListView.setAdapter(adapter);
-
 		messageEditText.setText("");
 
 	}
@@ -198,6 +203,7 @@ public class ChatActivity extends Activity implements ChatHandler {
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put(MESSAGE_KEY, message.getBody());
+		map.put(FROM_KEY, message.getFrom());
 		msgItemList.add(map);
 		adapter.notifyDataSetChanged();
 		messagesListView.setAdapter(adapter);

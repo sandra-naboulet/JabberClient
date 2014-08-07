@@ -1,18 +1,16 @@
 package etna.pmob.jabberclient.datas;
 
-import java.util.Date;
-
 public class Message {
 
 	String fromId;
 	String content;
-	Date date;
+	String date;
 
-	public Message(String fromId, String content) {
+	public Message(String fromId, String content, String date) {
 		super();
 		this.fromId = fromId;
 		this.content = content;
-		this.date = null;
+		this.date = date;
 	}
 
 	public String getFromId() {
@@ -31,11 +29,11 @@ public class Message {
 		this.content = content;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

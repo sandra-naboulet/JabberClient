@@ -194,6 +194,8 @@ public class ChatActivity extends Activity implements ChatHandler {
 		msgItemList.add(map);
 		adapter.notifyDataSetChanged();
 		messagesListView.setAdapter(adapter);
+		
+		
 		messageEditText.setText("");
 
 	}

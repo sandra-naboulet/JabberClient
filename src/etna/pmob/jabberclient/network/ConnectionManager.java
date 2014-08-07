@@ -103,7 +103,9 @@ public class ConnectionManager {
 	}
 
 	public void send(final ChatHandler handler, String to, String message) {
-		new SendMessageTask(connection, handler).execute(to, message);
+		if(message != null && !message.isEmpty()){
+			new SendMessageTask(connection, handler).execute(to, message);
+		}
 	}
 
 	public void displayContactsList(ContactsHandler handler) {

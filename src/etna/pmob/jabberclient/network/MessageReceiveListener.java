@@ -35,17 +35,12 @@ public class MessageReceiveListener extends Thread implements Runnable {
 			PacketFilter filter = new AndFilter(new PacketTypeFilter(
 					Message.class));
 			PacketCollector collector = newConn.createPacketCollector(filter);
-			String m;
+
 			while (true) {
 				Packet packet = collector.nextResult();
 				if (packet instanceof Message) {
 					final Message message = (Message) packet;
 					if (message != null && message.getBody() != null) {
-						m = "Received message from "
-								+ packet.getFrom()
-								+ " : "
-								+ (message != null ? message.getBody() : "NULL");
-						System.out.println(m);
 
 						ChatActivity.runOnUI(new Runnable() {
 							public void run() {

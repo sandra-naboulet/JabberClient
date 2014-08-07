@@ -16,6 +16,7 @@ import org.jivesoftware.smackx.provider.VCardProvider;
 import android.os.AsyncTask;
 import etna.pmob.jabberclient.datas.Contact;
 import etna.pmob.jabberclient.ui.ContactsHandler;
+import etna.pmob.jabberclient.util.Session;
 
 class ContactsTask extends AsyncTask<String, String, List<Contact>> {
 
@@ -39,8 +40,10 @@ class ContactsTask extends AsyncTask<String, String, List<Contact>> {
 		List<Contact> contacts = null;
 
 		try {
+			Session session = Session.getInstance();
+
 			connection.connect();
-			connection.login("s.naboulet@gmail.com", "imediosl1");
+			connection.login(session.getEmailId(), session.getPassword());
 
 			Roster roster = connection.getRoster();
 			contacts = new ArrayList<Contact>();

@@ -80,12 +80,14 @@ public class ConnectionManager {
 			handler.displayToast("success");
 			handler.isLogged(true);
 
-			connection.disconnect();
+			
 
 		} catch (XMPPException e) {
 			handler.displayToast("failed");
 			handler.isLogged(false);
 		}
+		
+		connection.disconnect();
 
 	}
 

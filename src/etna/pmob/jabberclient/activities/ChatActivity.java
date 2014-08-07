@@ -195,6 +195,7 @@ public class ChatActivity extends Activity implements ChatHandler {
 
 	@Override
 	public void onMessageReceived(org.jivesoftware.smack.packet.Message message) {
+
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put(MESSAGE_KEY, message.getBody());
 		msgItemList.add(map);

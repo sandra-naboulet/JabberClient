@@ -2,18 +2,14 @@ package etna.pmob.jabberclient.network;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.XMPPException;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
-import android.net.wifi.WifiManager.MulticastLock;
 import android.os.AsyncTask;
-import android.util.Log;
-import etna.pmob.jabberclient.BuildConfig;
-import etna.pmob.jabberclient.ui.ActivityHandler;
+import android.os.StrictMode;
+import etna.pmob.jabberclient.ui.ChatHandler;
 import etna.pmob.jabberclient.ui.ContactsHandler;
 import etna.pmob.jabberclient.ui.LoginHandler;
-import etna.pmob.jabberclient.ui.SignupHandler;
+import etna.pmob.jabberclient.util.Session;
 
 public class ConnectionManager {
 
@@ -22,9 +18,10 @@ public class ConnectionManager {
 	public static final int PORT = 5222;
 	public static final String SERVICE = "gmail.com";
 
+	private Session session;
+
 	private XMPPConnection connection;
 	ConnectionConfiguration config;
-	private ActivityHandler handler = null;
 
 	private static class Holder {
 		private final static ConnectionManager INSTANCE = new ConnectionManager();
@@ -32,6 +29,23 @@ public class ConnectionManager {
 
 	public static ConnectionManager getInstance() {
 		return Holder.INSTANCE;
+	}
+
+	public void setSession(Session newSession) {
+		this.session = Session.getInstance();
+		session.setEmailId(newSession.getEmailId());
+		session.setPassword(newSession.getPassword());
+
+	}
+
+	public ConnectionManager() {
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+				.permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+	}
+
+	public Session getSession() {
+		return this.session;
 	}
 
 	public void start() {
@@ -42,34 +56,55 @@ public class ConnectionManager {
 		this.start();
 	}
 
-	public void setUiHandler(ActivityHandler handler) {
-		this.handler = handler;
+	public void startMessagesListener(ChatHandler handler) {
+		new MessageReceiveListener(connection, handler).start();
 	}
 
-	public void login(String username, String password) {
-		new LoginTask(connection, (LoginHandler) handler).execute(username
-				+ "@gmail.com", password);
+	public void login(final LoginHandler handler, String username,
+			String password) {
+
+		try {
+			Session session = Session.getInstance();
+
+			connection.connect();
+
+			if (username.contains("@gmail.com")) {
+				connection.login(username, password);
+				session.setEmailId(username);
+			} else {
+				connection.login(username + "@gmail.com", password);
+				session.setEmailId(username + "@gmail.com");
+			}
+			session.setPassword(password);
+
+			handler.displayToast("success");
+			handler.isLogged(true);
+
+			connection.disconnect();
+
+		} catch (XMPPException e) {
+			handler.displayToast("failed");
+			handler.isLogged(false);
+		}
+
 	}
 
 	public void register(String username, String password) {
-		new RegisterTask(connection, (SignupHandler) handler).execute(username,
-				password);
+		// new RegisterTask(connection, (SignupHandler)
+		// handler).execute(username,
+		// password);
 	}
 
-	public void displayContactsList() {
-		new ContactsListTask(connection, (ContactsHandler) handler).execute();
+	public void send(final ChatHandler handler, String to, String message) {
+		new SendMessageTask(connection, handler).execute(to, message);
+	}
+
+	public void displayContactsList(ContactsHandler handler) {
+		new ContactsTask(connection, handler).execute();
 	}
 
 	public void disconnect() {
-		new DisconnectTask(connection, handler).execute();
-	}
-
-	public boolean isConnected() {
-		return connection.isConnected();
-	}
-
-	public ActivityHandler getActivityHandler() {
-		return handler;
+		// new DisconnectTask(connection, handler).execute();
 	}
 
 	/** Run in background **/
@@ -78,76 +113,38 @@ public class ConnectionManager {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			// if (BuildConfig.DEBUG) {
-			// Log.i("PIXL", "Searching for XBMC");
-			// }
-			// handler.loading();
 		}
 
 		@Override
 		protected Boolean doInBackground(Void... arg0) {
 
-			try {
-				// if (BuildConfig.DEBUG) {
-				// Log.i("PIXL", "Testing internet connection...");
-				// }
-				WifiManager wifiManager = (WifiManager) handler.getActivity()
-						.getSystemService(Context.WIFI_SERVICE);
-				MulticastLock multicastLock = wifiManager
-						.createMulticastLock("multicastLock");
-				multicastLock.setReferenceCounted(true);
-				multicastLock.acquire();
-				ConnectivityManager conMgr = (ConnectivityManager) handler
-						.getActivity().getSystemService(
-								Context.CONNECTIVITY_SERVICE);
-				if (conMgr.getActiveNetworkInfo() != null
-						&& conMgr.getActiveNetworkInfo().isAvailable()
-						&& conMgr.getActiveNetworkInfo().isConnected()) {
+			// try {
 
-					if (BuildConfig.DEBUG) {
-						Log.i("Jabber", "Connected to internet");
-					}
+			// WifiManager wifiManager = (WifiManager) handler.getActivity()
+			// .getSystemService(Context.WIFI_SERVICE);
+			// MulticastLock multicastLock = wifiManager
+			// .createMulticastLock("multicastLock");
+			// multicastLock.setReferenceCounted(true);
+			// multicastLock.acquire();
+			// ConnectivityManager conMgr = (ConnectivityManager) handler
+			// .getActivity().getSystemService(
+			// Context.CONNECTIVITY_SERVICE);
+			// if (conMgr.getActiveNetworkInfo() != null
+			// && conMgr.getActiveNetworkInfo().isAvailable()
+			// && conMgr.getActiveNetworkInfo().isConnected()) {
 
-					// SASLAuthentication.registerSASLMechanism("DIGEST-MD5",
-					// SASLDigestMD5Mechanism.class);
-					// SASLAuthentication.supportSASLMechanism("DIGEST-MD5", 1);
-					//
-					// System.setProperty("smack.debugEnabled", "true");
-					// XMPPConnection.DEBUG_ENABLED = true;
-					// SmackConfiguration.setPacketReplyTimeout(6000);
-					//
-					// config = new ConnectionConfiguration(HOST, PORT,
-					// SERVICE);
-					// config.setSASLAuthenticationEnabled(true);
-					// config.setRosterLoadedAtLogin(false);
-					// config.setCompressionEnabled(true);
-					// config.setSecurityMode(ConnectionConfiguration.SecurityMode.enabled);
-					//
-					// connection = new XMPPConnection(config);
-					//
-					// SASLAuthentication.supportSASLMechanism("PLAIN");
-					// config.setSASLAuthenticationEnabled(true);
-					// connection.connect();
-					// Roster.setDefaultSubscriptionMode(Roster.SubscriptionMode.manual);
+			connection = new XMPPConnection(SERVICE);
+			// new MessageReceiveListener(connection).start();
 
-					connection = new XMPPConnection(SERVICE);
-
-					return Boolean.TRUE;
-
-				} else {
-					if (BuildConfig.DEBUG) {
-						Log.i("PIXL", "No internet connection.");
-					}
-					return Boolean.FALSE;
-				}
-
-			} catch (Exception e) {
-				// if (BuildConfig.DEBUG) {
-				// Log.e("PIXL", e.getMessage());
-				// }
-				// handler.loading();
-				return Boolean.FALSE;
-			}
+			return Boolean.TRUE;
+			//
+			// } else {
+			// return Boolean.FALSE;
+			// }
+			//
+			// } catch (Exception e) {
+			// return Boolean.FALSE;
+			// }
 		}
 
 		@Override

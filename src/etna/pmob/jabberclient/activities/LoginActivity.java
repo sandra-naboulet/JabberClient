@@ -47,9 +47,9 @@ public class LoginActivity extends Activity implements LoginHandler {
 
 				if (action == MotionEvent.ACTION_UP) {
 					if (!isLogging) {
-						connectionManager.login(usernameEditText.getText()
-								.toString(), passwordEditText.getText()
-								.toString());
+						connectionManager.login(LoginActivity.this,
+								usernameEditText.getText().toString(),
+								passwordEditText.getText().toString());
 						isLogging = true;
 					}
 
@@ -75,7 +75,6 @@ public class LoginActivity extends Activity implements LoginHandler {
 		});
 
 		connectionManager = ConnectionManager.getInstance();
-		connectionManager.setUiHandler(this);
 		connectionManager.start(); // connection to the server
 
 	}
@@ -89,19 +88,13 @@ public class LoginActivity extends Activity implements LoginHandler {
 	}
 
 	@Override
-	public void noInternet() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void isLogged(boolean is) {
 		if (is) {
 			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent);
 		} else {
-			// user nameEditText.setText("");
-			// passwordEditText.setText("");
+			usernameEditText.setText("");
+			passwordEditText.setText("");
 			// connectionManager.restart();
 		}
 		isLogging = false;

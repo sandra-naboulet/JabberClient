@@ -29,34 +29,45 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int contact_name=0x7f070001;
-        public static final int contact_thumbnail=0x7f070000;
-        public static final int contactsListView=0x7f07000f;
-        public static final int login_button=0x7f070006;
-        public static final int login_header=0x7f070002;
-        public static final int login_password=0x7f070005;
-        public static final int login_title=0x7f070003;
-        public static final int login_username=0x7f070004;
-        public static final int signup_button=0x7f07000e;
-        public static final int signup_confirm_password=0x7f07000d;
-        public static final int signup_header=0x7f070009;
-        public static final int signup_link=0x7f070007;
-        public static final int signup_password=0x7f07000c;
-        public static final int signup_title=0x7f07000a;
-        public static final int signup_username=0x7f07000b;
-        public static final int tabs_container=0x7f070008;
+        public static final int chat_contact_header=0x7f070000;
+        public static final int chat_contact_icon=0x7f070001;
+        public static final int chat_contact_name=0x7f070002;
+        public static final int chat_message_content=0x7f070010;
+        public static final int chat_message_text=0x7f070004;
+        public static final int contact_name=0x7f070008;
+        public static final int contact_thumbnail=0x7f070007;
+        public static final int contactsListView=0x7f070017;
+        public static final int login_button=0x7f07000d;
+        public static final int login_header=0x7f070009;
+        public static final int login_password=0x7f07000c;
+        public static final int login_title=0x7f07000a;
+        public static final int login_username=0x7f07000b;
+        public static final int message_edit_text=0x7f070006;
+        public static final int messages_list_view=0x7f070003;
+        public static final int sendButton=0x7f070005;
+        public static final int signup_button=0x7f070016;
+        public static final int signup_confirm_password=0x7f070015;
+        public static final int signup_header=0x7f070011;
+        public static final int signup_link=0x7f07000e;
+        public static final int signup_password=0x7f070014;
+        public static final int signup_title=0x7f070012;
+        public static final int signup_username=0x7f070013;
+        public static final int tabs_container=0x7f07000f;
     }
     public static final class layout {
-        public static final int activity_contact_item=0x7f030000;
-        public static final int activity_login=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_signup=0x7f030003;
-        public static final int fragment_contacts_tab=0x7f030004;
-        public static final int fragment_history_tab=0x7f030005;
-        public static final int fragment_profile_tab=0x7f030006;
+        public static final int activity_chat=0x7f030000;
+        public static final int activity_contact_item=0x7f030001;
+        public static final int activity_login=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_message_item=0x7f030004;
+        public static final int activity_signup=0x7f030005;
+        public static final int fragment_contacts_tab=0x7f030006;
+        public static final int fragment_history_tab=0x7f030007;
+        public static final int fragment_profile_tab=0x7f030008;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
+        public static final int chat_send_button=0x7f050013;
         public static final int confirm_password=0x7f050003;
         public static final int contact_menu_chat=0x7f050011;
         public static final int contact_menu_profile=0x7f050012;

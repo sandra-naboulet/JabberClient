@@ -3,6 +3,7 @@ package etna.pmob.jabberclient.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -14,7 +15,8 @@ import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.activities.tabs.ContactsTab;
 import etna.pmob.jabberclient.activities.tabs.HistoryTab;
 import etna.pmob.jabberclient.activities.tabs.ProfileTab;
-import etna.pmob.jabberclient.network.Contact;
+import etna.pmob.jabberclient.datas.Contact;
+import etna.pmob.jabberclient.network.ConnectionManager;
 import etna.pmob.jabberclient.ui.MainHandler;
 import etna.pmob.jabberclient.util.TabListener;
 
@@ -28,6 +30,8 @@ public class MainActivity extends Activity implements MainHandler {
 	FrameLayout layout = null;
 
 	Contact selectedContact;
+
+	ConnectionManager connectionManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +55,6 @@ public class MainActivity extends Activity implements MainHandler {
 		// Create Actionbar Tabs
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// Set Tab Icon and Titles
-		// HistoryTab = actionBar.newTab().setIcon(R.drawable.tab1);
 		HistoryTab = actionBar.newTab().setText("History");
 		ContactsTab = actionBar.newTab().setText("Contacts");
 		ProfileTab = actionBar.newTab().setText("Profile");
@@ -68,6 +70,9 @@ public class MainActivity extends Activity implements MainHandler {
 		actionBar.addTab(ProfileTab);
 
 		registerForContextMenu(layout);
+
+		connectionManager = ConnectionManager.getInstance();
+		connectionManager.start(); // connection to the server
 
 	}
 
@@ -104,9 +109,17 @@ public class MainActivity extends Activity implements MainHandler {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getTitle() == getString(R.string.contact_menu_chat)) {
-			// Intent intent = new Intent(MainActivity.this,
-			// PsControllerActivity.class);
-			// startActivity(intent);
+			Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+			String name;
+			if (selectedContact.getName() == null
+					|| selectedContact.getName().isEmpty()) {
+				name = selectedContact.getEmailId();
+			} else {
+				name = selectedContact.getName();
+			}
+			intent.putExtra("contactName", name);
+			intent.putExtra("contactEmailId", selectedContact.getEmailId());
+			startActivity(intent);
 		} else if (item.getTitle() == getString(R.string.contact_menu_profile)) {
 
 		} else {

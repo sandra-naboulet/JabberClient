@@ -1,4 +1,4 @@
-package etna.pmob.jabberclient.network;
+package etna.pmob.jabberclient.datas;
 
 public class Contact {
 

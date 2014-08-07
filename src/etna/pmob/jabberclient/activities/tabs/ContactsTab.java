@@ -17,8 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.activities.MainActivity;
+import etna.pmob.jabberclient.datas.Contact;
 import etna.pmob.jabberclient.network.ConnectionManager;
-import etna.pmob.jabberclient.network.Contact;
 import etna.pmob.jabberclient.ui.ContactsHandler;
 
 public class ContactsTab extends ListFragment implements ContactsHandler {
@@ -37,13 +37,7 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 
 		listview = (ListView) rootView.findViewById(R.id.contactsListView);
 
-		// final StableArrayAdapter adapter = new StableArrayAdapter(
-		// getActivity(), R.layout.activity_contact_item,
-		// // android.R.layout.simple_list_item_1,
-		// contactsList);
-
-		ConnectionManager.getInstance().setUiHandler(this);
-		ConnectionManager.getInstance().displayContactsList();
+		ConnectionManager.getInstance().displayContactsList(this);
 
 		return rootView;
 
@@ -55,14 +49,11 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 		private ArrayList<HashMap<String, String>> data;
 		private LayoutInflater inflater = null;
 
-		// public ImageLoader imageLoader;
-
 		public ArrayAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
 			activity = a;
 			data = d;
 			inflater = (LayoutInflater) activity
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			// imageLoader = new ImageLoader(activity.getApplicationContext());
 		}
 
 		public int getCount() {
@@ -83,18 +74,10 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 			if (convertView == null)
 				vi = inflater.inflate(R.layout.activity_contact_item, null);
 
-			// TextView email = (TextView)
-			// vi.findViewById(R.id.contact_emailId); // email
 			TextView name = (TextView) vi.findViewById(R.id.contact_name); // name
-
-			// ImageView thumb_image = (ImageView) vi
-			// .findViewById(R.id.contact_thumbnail); // thumb image
 
 			HashMap<String, String> contact = new HashMap<String, String>();
 			contact = data.get(position);
-
-			// Setting all values in listview
-			// email.setText(contact.get(EMAIL_KEY));
 
 			if (contact.get(NAME_KEY) == null
 					|| contact.get(NAME_KEY).isEmpty()) {
@@ -103,7 +86,6 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 				name.setText(contact.get(NAME_KEY));
 			}
 
-			// imageLoader.DisplayImage(contact.get("thumbnail"), thumb_image);
 			return vi;
 		}
 
@@ -127,7 +109,6 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 
 		ArrayList<HashMap<String, String>> contactsItemList = new ArrayList<HashMap<String, String>>();
 
-		// looping through all song nodes &lt;song&gt;
 		for (Contact contact : contactsList) {
 
 			HashMap<String, String> map = new HashMap<String, String>();
@@ -135,7 +116,6 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 			map.put(NAME_KEY, contact.getName());
 			map.put("thumbnail", "...");
 
-			// adding HashList to ArrayList
 			contactsItemList.add(map);
 		}
 		ArrayAdapter adapter = new ArrayAdapter(this.getActivity(),
@@ -148,17 +128,7 @@ public class ContactsTab extends ListFragment implements ContactsHandler {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
-				// final String item = (String)
-				// parent.getItemAtPosition(position);
-				// view.animate().setDuration(2000).alpha(0)
-				// .withEndAction(new Runnable() {
-				// @Override
-				// public void run() {
-				// contactsList.remove(item);
-				// // adapter.notifyDataSetChanged();
-				// view.setAlpha(1);
-				// }
-				// });
+
 				Contact selectedContact = (Contact) parent
 						.getItemAtPosition(position);
 

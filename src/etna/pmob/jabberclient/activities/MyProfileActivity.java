@@ -13,7 +13,7 @@ import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.network.ConnectionManager;
 import etna.pmob.jabberclient.ui.SignupHandler;
 
-public class SignupActivity extends Activity implements SignupHandler {
+public class MyProfileActivity extends Activity implements SignupHandler {
 
 	RelativeLayout layout = null;
 	Button signupButton = null;
@@ -22,7 +22,6 @@ public class SignupActivity extends Activity implements SignupHandler {
 	EditText passwordConfirmEditText = null;
 
 	ConnectionManager connectionManager;
-	private boolean isRegistering = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +46,6 @@ public class SignupActivity extends Activity implements SignupHandler {
 				int action = event.getAction();
 
 				if (action == MotionEvent.ACTION_UP) {
-					if (!isRegistering) {
-						if (usernameEditText.getText().toString().isEmpty()) {
-							displayToast(getResources().getString(
-									R.string.signup_username_empty));
-							return true;
-						} else if (passwordEditText.getText().toString()
-								.isEmpty()) {
-							displayToast(getResources().getString(
-									R.string.signup_password_empty));
-							return true;
-						} else if (!passwordEditText
-								.getText()
-								.toString()
-								.equals(passwordConfirmEditText.getText()
-										.toString())) {
-							displayToast(getResources().getString(
-									R.string.signup_passwords_dont_match));
-							return true;
-						}
-						connectionManager.register(usernameEditText.getText()
-								.toString(), passwordEditText.getText()
-								.toString());
-						isRegistering = true;
-					}
 
 				}
 				return true;
@@ -87,7 +62,8 @@ public class SignupActivity extends Activity implements SignupHandler {
 	@Override
 	public void isRegistered(boolean is) {
 		if (is) {
-			Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+			Intent intent = new Intent(MyProfileActivity.this,
+					MainActivity.class);
 			startActivity(intent);
 		} else {
 			// usernameEditText.setText("");
@@ -95,7 +71,7 @@ public class SignupActivity extends Activity implements SignupHandler {
 			// passwordConfirmEditText.setText("");
 			// connectionManager.restart();
 		}
-		isRegistering = false;
+
 	}
 
 	@Override

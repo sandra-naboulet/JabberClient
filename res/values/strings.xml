@@ -20,5 +20,6 @@
     <string name="contact_thumbnail">thumbnail</string>
     <string name="contact_menu_chat">Send a message</string>
     <string name="contact_menu_profile">See profile</string>
+    <string name="chat_send_button">Send</string>
 
 </resources>

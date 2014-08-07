@@ -6,6 +6,7 @@ import org.jivesoftware.smack.XMPPException;
 
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import etna.pmob.jabberclient.R;
 import etna.pmob.jabberclient.ui.ChatHandler;
 import etna.pmob.jabberclient.ui.ContactsHandler;
 import etna.pmob.jabberclient.ui.LoginHandler;
@@ -77,13 +78,11 @@ public class ConnectionManager {
 			}
 			session.setPassword(password);
 
-			handler.displayToast("success");
+			handler.displayToast(handler.getActivity().getResources().getString(R.string.login_succeed));
 			handler.isLogged(true);
 
-			
-
 		} catch (XMPPException e) {
-			handler.displayToast("failed");
+			handler.displayToast(handler.getActivity().getResources().getString(R.string.login_failed));
 			handler.isLogged(false);
 		}
 		

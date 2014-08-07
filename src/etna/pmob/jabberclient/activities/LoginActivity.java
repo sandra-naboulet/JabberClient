@@ -1,7 +1,10 @@
 package etna.pmob.jabberclient.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +25,10 @@ public class LoginActivity extends Activity implements LoginHandler {
 	EditText passwordEditText = null;
 	TextView signupTextView = null;
 
+	public static final String LOGIN_DATAS = "LoginDatas";
+	public static final String LAST_EMAIL_KEY = "lastEmailId";
+	SharedPreferences sharedpreferences;
+
 	ConnectionManager connectionManager;
 	private boolean isLogging = false;
 
@@ -39,6 +46,7 @@ public class LoginActivity extends Activity implements LoginHandler {
 		passwordEditText = (EditText) layout.findViewById(R.id.login_password);
 
 		loginButton = (Button) layout.findViewById(R.id.login_button);
+
 		loginButton.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
@@ -47,10 +55,11 @@ public class LoginActivity extends Activity implements LoginHandler {
 
 				if (action == MotionEvent.ACTION_UP) {
 					if (!isLogging) {
+						isLogging = true;
 						connectionManager.login(LoginActivity.this,
 								usernameEditText.getText().toString(),
 								passwordEditText.getText().toString());
-						isLogging = true;
+
 					}
 
 				}
@@ -77,6 +86,14 @@ public class LoginActivity extends Activity implements LoginHandler {
 		connectionManager = ConnectionManager.getInstance();
 		connectionManager.start(); // connection to the server
 
+		sharedpreferences = getSharedPreferences(LOGIN_DATAS,
+				Context.MODE_PRIVATE);
+
+		if (sharedpreferences.contains(LAST_EMAIL_KEY)) {
+			usernameEditText.setText(sharedpreferences.getString(
+					LAST_EMAIL_KEY, ""));
+		}
+
 	}
 
 	// UPDATE UI METHODS
@@ -92,8 +109,11 @@ public class LoginActivity extends Activity implements LoginHandler {
 		if (is) {
 			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 			startActivity(intent);
+			Editor editor = sharedpreferences.edit();
+			editor.putString(LAST_EMAIL_KEY, usernameEditText.getText()
+					.toString());
+			editor.commit();
 		} else {
-			usernameEditText.setText("");
 			passwordEditText.setText("");
 			// connectionManager.restart();
 		}
